@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Table</title>
+<style>
+    table {
+        border-collapse: collapse;
+    }
+    td {
+        width: 50px;
+        height: 30px;
+        border: 1px solid black;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+    <button onclick="addRandomNumber()">Добавить число</button>
+    <table>
+        <tbody id="table-body"></tbody>
+    </table>
+
+    <!-- Script to generate random array and create table -->
+    <script>
+        let numbers = Array.from({ length: 30 }, () => Math.floor(Math.random() * 100));
+        let tableBody = document.getElementById("table-body");
+
+        // Function to generate table based on the random numbers array
+        function generateTable() {
+            tableBody.innerHTML = "";
+            let count = 0;
+            for (let i = 0; i < 5; i++) {
+                let row = document.createElement("tr");
+                for (let j = 0; j < 6; j++) {
+                    let cell = document.createElement("td");
+                    cell.textContent = numbers[count];
+                    if (numbers[count] >= 50) {
+                        cell.style.backgroundColor = "orange";
+                    }
+                    row.appendChild(cell);
+                    count++;
+                }
+                tableBody.appendChild(row);
+            }
+        }
+
+        generateTable();
+
+        // Function to add a random number to the table
+        function addRandomNumber() {
+            let randomNum = Math.floor(Math.random() * 100);
+            numbers.push(randomNum);
+
+            let lastRow = tableBody.lastElementChild;
+            let lastCell = document.createElement("td");
+
+            lastCell.textContent = randomNum;
+            if (randomNum >= 50) {
+                lastCell.style.backgroundColor = "orange";
+            }
+
+            if (lastRow.childElementCount < 6) {
+                lastRow.appendChild(lastCell);
+            } else {
+                let newRow = document.createElement("tr");
+                newRow.appendChild(lastCell);
+                tableBody.appendChild(newRow);
+            }
+        }
+    </script>
+</body>
+</html>
